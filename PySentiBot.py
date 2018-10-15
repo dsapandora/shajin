@@ -11,6 +11,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
+import aiml
+
 
 import os
 
@@ -29,6 +31,14 @@ access_token = os.getenv("bot_access_token")
 access_token_secret = os.getenv("bot_access_token_secret")
 
 
+#Talking bot_brain
+if os.path.isfile("bot_brain.brn"):
+    kernel.bootstrap(brainFile = "bot_brain.brn")
+else:
+    kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
+    kernel.saveBrain("bot_brain.brn")
+
+
 # Setup Tweepy API Authentication
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -45,7 +55,7 @@ def parse_requests(tweet, tweet_dict=dict()):
     tweet_requests = []
     print(tweet_id)
     for mentions in tweet["entities"]["user_mentions"]:
-        if (mentions["screen_name"] != "Shajin"):
+        if (mentions["screen_name"] != "dsapandora"):
             tweet_requests.append(mentions["screen_name"])
 
     tweet_dict = {"id":tweet_id,"user":tweet_user,"analysis_requests":tweet_requests}
@@ -62,7 +72,7 @@ def analyze_sentiments(recent_tweets, sentiment_results=list()):
         sentiment_result = analyzer.polarity_scores(new_tweet["text"])
         sentiment_result.update({"tweet_id":new_tweet["id"]})
         sentiment_results.append(sentiment_result)
-    return sentiment_results
+    return [sentiment_results, new_tweet['text']]
 
 
 # In[ ]:
@@ -124,7 +134,7 @@ def scan_for_requests(since_tweet_id):
 
     last_tweet_id = since_tweet_id
 
-    search_handle = "@Shajin"
+    search_handle = "@dsapandora"
 
     results = api.mentions_timeline(since_tweet_id)
 
@@ -155,10 +165,13 @@ def scan_for_requests(since_tweet_id):
                 print(f"{analyze_request} - {len(recent_tweets)}")
 
                 if(len(recent_tweets) > 0):
-                    sentiments = analyze_sentiments(recent_tweets)
+                    sentiments, message = analyze_sentiments(recent_tweets)
+                    bot_response = kernel.respond(message)
+                    kernel.saveBrain("bot_brain.brn")
                     print(sentiments)
+                    print(bot_response)
                     sentiment_fig = plot_sentiments(analyze_request,sentiments)
-                    text_status = f"{datetime.now()} - Thank you for your tweet @{item['user']}! Here is the sentiment analysis of {analyze_request}!"
+                    text_status = f"{datetime.now()} - Thank you for your tweet @{item['user']}! @{bot_response} btw... Here is the sentiment analysis of {analyze_request}!"
                     api.update_with_media(filename=sentiment_fig,status=text_status,in_reply_to_status_id=item["id"])
                 else:
                     text_status = f"{datetime.now()} - Thank you for your tweet @{item['user']}! Sorry, {analyze_request} has no tweets!"
@@ -174,7 +187,7 @@ def scan_for_requests(since_tweet_id):
 # In[ ]:
 
 
-since_tweet_id = 937422923572400129
+since_tweet_id = 1051745883824541696
 
 while True:
     time.sleep(30)
