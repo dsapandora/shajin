@@ -189,7 +189,7 @@ def scan_for_requests(since_tweet_id):
 # In[ ]:
 
 
-since_tweet_id = 1051744843142180864
+since_tweet_id = long(os.getenv("since_tweet_id"))
 
 while True:
     time.sleep(30)
