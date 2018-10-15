@@ -173,7 +173,7 @@ def scan_for_requests(since_tweet_id):
                     print(sentiments)
                     print(bot_response)
                     sentiment_fig = plot_sentiments(analyze_request,sentiments)
-                    text_status = datetime.now()+" - Thank you for your tweet " + item['user']+"! "+ bot_response +" btw... Here is the sentiment analysis of "+analyze_request+"!"
+                    text_status = datetime.now()+" Shajin:" + item['user']+"! "+ bot_response +" btw... Here is the sentiment analysis of "+analyze_request+"!"
                     api.update_with_media(filename=sentiment_fig,status=text_status,in_reply_to_status_id=item["id"])
                 else:
                     text_status = datetime.now()+" - Thank you for your tweet "+ item['user']+"! Sorry, "+ analyze_request + " has no tweets!"
