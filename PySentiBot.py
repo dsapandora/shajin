@@ -152,7 +152,7 @@ def scan_for_requests(since_tweet_id):
             last_tweet_id = tweet['id']
             print "Parsed tweet -" + str(tweet)
             tweet_data.append(parsed_tweet)
-        print "tweet data -"+ ', '.join(tweet_data)
+        #print "tweet data -"+ ', '.join(tweet_data)
 
         for item in tweet_data:
 
