@@ -140,7 +140,7 @@ def scan_for_requests(since_tweet_id):
 
     results = api.mentions_timeline(since_tweet_id)
 
-    print "Total results retrieved - "+ len(results)
+    print "Total results retrieved - "+ str(len(results))
 
     if(len(results) > 0):
 
