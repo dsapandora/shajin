@@ -32,6 +32,7 @@ access_token_secret = os.getenv("bot_access_token_secret")
 
 
 #Talking bot_brain
+kernel = aiml.Kernel()
 if os.path.isfile("bot_brain.brn"):
     kernel.bootstrap(brainFile = "bot_brain.brn")
 else:
