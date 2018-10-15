@@ -150,9 +150,9 @@ def scan_for_requests(since_tweet_id):
         for tweet in results:
             parsed_tweet = parse_requests(tweet)
             last_tweet_id = tweet['id']
-            print "Parsed tweet -" + tweet
+            print "Parsed tweet -" + str(tweet)
             tweet_data.append(parsed_tweet)
-        print "tweet data -"+ tweet_data
+        print "tweet data -"+ ', '.join(tweet_data)
 
         for item in tweet_data:
 
@@ -164,7 +164,7 @@ def scan_for_requests(since_tweet_id):
 
                 recent_tweets = api.user_timeline(analyze_request,count=200)
 
-                print analyze_request + " - " + len(recent_tweets)
+                print analyze_request + " - " + str(len(recent_tweets))
 
                 if(len(recent_tweets) > 0):
                     sentiments, message = analyze_sentiments(recent_tweets)
