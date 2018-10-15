@@ -140,19 +140,19 @@ def scan_for_requests(since_tweet_id):
 
     results = api.mentions_timeline(since_tweet_id)
 
-    print(f"Total results retrieved - {len(results)}")
+    print "Total results retrieved - "+ len(results)
 
     if(len(results) > 0):
 
         tweet_data = []
-        print(results)
+        print results
 
         for tweet in results:
             parsed_tweet = parse_requests(tweet)
             last_tweet_id = tweet['id']
-            print(f"Parsed tweet - {tweet}")
+            print "Parsed tweet -" + tweet
             tweet_data.append(parsed_tweet)
-        print(f"tweet data - {tweet_data}")
+        print "tweet data -"+ tweet_data
 
         for item in tweet_data:
 
@@ -164,7 +164,7 @@ def scan_for_requests(since_tweet_id):
 
                 recent_tweets = api.user_timeline(analyze_request,count=200)
 
-                print(f"{analyze_request} - {len(recent_tweets)}")
+                print analyze_request + " - " + len(recent_tweets)
 
                 if(len(recent_tweets) > 0):
                     sentiments, message = analyze_sentiments(recent_tweets)
@@ -173,10 +173,10 @@ def scan_for_requests(since_tweet_id):
                     print(sentiments)
                     print(bot_response)
                     sentiment_fig = plot_sentiments(analyze_request,sentiments)
-                    text_status = f"{datetime.now()} - Thank you for your tweet @{item['user']}! @{bot_response} btw... Here is the sentiment analysis of {analyze_request}!"
+                    text_status = datetime.now()+" - Thank you for your tweet " + item['user']+"! "+ bot_response +" btw... Here is the sentiment analysis of "+analyze_request+"!"
                     api.update_with_media(filename=sentiment_fig,status=text_status,in_reply_to_status_id=item["id"])
                 else:
-                    text_status = f"{datetime.now()} - Thank you for your tweet @{item['user']}! Sorry, {analyze_request} has no tweets!"
+                    text_status = datetime.now()+" - Thank you for your tweet "+ item['user']+"! Sorry, "+ analyze_request + " has no tweets!"
                     api.update_status(text_status)
 
                     total_tweets_so_far = total_tweets_so_far + 1
