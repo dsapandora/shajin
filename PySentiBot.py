@@ -189,7 +189,7 @@ def scan_for_requests(since_tweet_id):
 # In[ ]:
 
 
-since_tweet_id = 1051745883824541696
+since_tweet_id = 1051744843142180864
 
 while True:
     time.sleep(30)
