@@ -1,0 +1,5 @@
+tweepy==3.5.0
+vaderSentiment==2.5
+seaborn==0.8
+numpy==1.9.1
+matplotlib==1.4.3
