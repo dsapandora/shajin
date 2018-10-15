@@ -3,3 +3,4 @@ vaderSentiment==2.5
 seaborn==0.8
 numpy==1.9.1
 matplotlib==1.4.3
+aiml==0.8.6
