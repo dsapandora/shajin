@@ -1,8 +1,7 @@
 # Twitter Bot - Sentiment Analysis
 
 ## Overview
-This project involves a Twitter Bot that performs sentiment analysis on tweets. The bot listens for requests on Twitter and posts back an image of the analysis to the user who requested it. You can follow and interact with the bot on Twitter: [@PySentimentBot](https://twitter.com/PySentimentBot).
-
+This project involves a Twitter Bot that performs sentiment analysis on tweets. The bot listens for requests on Twitter and posts back an image of the analysis to the user who requested it.
 ## Dependencies
 The project uses the following libraries:
 - `tweepy` for interacting with the Twitter API
